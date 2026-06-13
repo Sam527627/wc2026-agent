@@ -1,0 +1,270 @@
+{
+  "match": {
+    "id": "537327",
+    "utc": "2026-06-11T19:00:00Z",
+    "stage": "GROUP_STAGE",
+    "group": "GROUP_A",
+    "home": "Mexico",
+    "away": "South Africa",
+    "home_goals": 2,
+    "away_goals": 0,
+    "winner": "HOME_TEAM"
+  },
+  "video_type": "C",
+  "package": {
+    "titles": [
+      {
+        "text": "Mexico Dominates South Africa",
+        "score": 85,
+        "lever": "stakes"
+      },
+      {
+        "text": "Group A Balance of Power Shifts",
+        "score": 80,
+        "lever": "consequence"
+      },
+      {
+        "text": "Mexico's Midfield Masterclass",
+        "score": 78,
+        "lever": "surprise"
+      },
+      {
+        "text": "South Africa's Uphill Battle Begins",
+        "score": 75,
+        "lever": "conflict"
+      },
+      {
+        "text": "Mexico's High-Intensity Approach Pays Off",
+        "score": 72,
+        "lever": "curiosity"
+      },
+      {
+        "text": "Edson \u00c1lvarez: The Unsung Hero",
+        "score": 70,
+        "lever": "surprise"
+      },
+      {
+        "text": "Mexico Takes Control of Group A",
+        "score": 68,
+        "lever": "stakes"
+      },
+      {
+        "text": "South Africa's Counter-Attacks Fall Short",
+        "score": 65,
+        "lever": "conflict"
+      },
+      {
+        "text": "Mexico's Statement Win Sends Shockwaves",
+        "score": 62,
+        "lever": "consequence"
+      },
+      {
+        "text": "Group A Dynamics Shift After Mexico's Win",
+        "score": 60,
+        "lever": "curiosity"
+      },
+      {
+        "text": "Mexico's Relentless Pressure Pays Off",
+        "score": 58,
+        "lever": "surprise"
+      },
+      {
+        "text": "South Africa Faces Must-Win Situation",
+        "score": 55,
+        "lever": "stakes"
+      },
+      {
+        "text": "Mexico's Midfield Pivot Proves Crucial",
+        "score": 52,
+        "lever": "curiosity"
+      },
+      {
+        "text": "Mexico's Win Sets Up Exciting Group A Finale",
+        "score": 50,
+        "lever": "consequence"
+      },
+      {
+        "text": "South Africa's Defense Cracks Under Pressure",
+        "score": 48,
+        "lever": "conflict"
+      },
+      {
+        "text": "Mexico's Jes\u00fas Gallardo Makes Crucial Contribution",
+        "score": 45,
+        "lever": "surprise"
+      },
+      {
+        "text": "Mexico's Victory Boosts Their Group A Chances",
+        "score": 42,
+        "lever": "stakes"
+      },
+      {
+        "text": "Group A Table Update: Mexico Takes Lead",
+        "score": 40,
+        "lever": "curiosity"
+      },
+      {
+        "text": "South Africa's Next Match Crucial for Qualification",
+        "score": 38,
+        "lever": "conflict"
+      },
+      {
+        "text": "Mexico's Win Has Significant Tournament Implications",
+        "score": 35,
+        "lever": "consequence"
+      },
+      {
+        "text": "Edson \u00c1lvarez's Performance Goes Under the Radar",
+        "score": 32,
+        "lever": "surprise"
+      },
+      {
+        "text": "Mexico's High-Pressing Defense Pays Off",
+        "score": 30,
+        "lever": "curiosity"
+      },
+      {
+        "text": "South Africa's Speedy Counter-Attacks Not Enough",
+        "score": 28,
+        "lever": "conflict"
+      },
+      {
+        "text": "Mexico's Statement Win Sends Message to Group A",
+        "score": 25,
+        "lever": "stakes"
+      },
+      {
+        "text": "Mexico's Midfield Control Proves Decisive",
+        "score": 22,
+        "lever": "curiosity"
+      },
+      {
+        "text": "South Africa's Defeat Leaves Them with Tough Road Ahead",
+        "score": 20,
+        "lever": "consequence"
+      },
+      {
+        "text": "Mexico's Win Sets Up Intriguing Group A Scenarios",
+        "score": 18,
+        "lever": "surprise"
+      },
+      {
+        "text": "Mexico's Victory Has Significant Implications for Group A",
+        "score": 15,
+        "lever": "stakes"
+      },
+      {
+        "text": "South Africa's Loss Raises Questions About Their Qualification Chances",
+        "score": 12,
+        "lever": "conflict"
+      },
+      {
+        "text": "Mexico's Midfield Mastery Proves Crucial in Win",
+        "score": 10,
+        "lever": "curiosity"
+      },
+      {
+        "text": "Mexico's Win Leaves South Africa with Must-Win Situation",
+        "score": 8,
+        "lever": "consequence"
+      },
+      {
+        "text": "Mexico's Statement Win Sends Shockwaves Through Tournament",
+        "score": 5,
+        "lever": "surprise"
+      },
+      {
+        "text": "Mexico Takes Control of Group A with Dominant Win",
+        "score": 2,
+        "lever": "stakes"
+      }
+    ],
+    "thumbnails": [
+      {
+        "text": "Mexico Wins",
+        "emotion": "excitement",
+        "ctr_logic": "emotional appeal",
+        "layout": "text-only"
+      },
+      {
+        "text": "Group A Update",
+        "emotion": "curiosity",
+        "ctr_logic": "information gap",
+        "layout": "image-with-text"
+      },
+      {
+        "text": "Mexico Dominates",
+        "emotion": "confidence",
+        "ctr_logic": "social proof",
+        "layout": "image-only"
+      },
+      {
+        "text": "South Africa Falls",
+        "emotion": "disappointment",
+        "ctr_logic": "emotional appeal",
+        "layout": "text-only"
+      },
+      {
+        "text": "Mexico's Midfield",
+        "emotion": "intrigue",
+        "ctr_logic": "information gap",
+        "layout": "image-with-text"
+      },
+      {
+        "text": "Edson \u00c1lvarez",
+        "emotion": "surprise",
+        "ctr_logic": "social proof",
+        "layout": "image-only"
+      },
+      {
+        "text": "Group A Table",
+        "emotion": "curiosity",
+        "ctr_logic": "information gap",
+        "layout": "image-with-text"
+      },
+      {
+        "text": "Mexico's Win",
+        "emotion": "excitement",
+        "ctr_logic": "emotional appeal",
+        "layout": "text-only"
+      },
+      {
+        "text": "South Africa's Next Match",
+        "emotion": "anticipation",
+        "ctr_logic": "social proof",
+        "layout": "image-with-text"
+      },
+      {
+        "text": "Mexico's Statement Win",
+        "emotion": "confidence",
+        "ctr_logic": "information gap",
+        "layout": "image-only"
+      }
+    ],
+    "shorts": [
+      {
+        "hook": "Mexico silences South Africa's attack!",
+        "script": "Mexico's high-pressing defense and midfield mastery prove too much for South Africa, securing a 2-0 win and taking control of Group A."
+      },
+      {
+        "hook": "Edson \u00c1lvarez: The unsung hero!",
+        "script": "Mexico's midfield pivot dictates the tempo of the game, completing 93% of his passes and providing the crucial assist for the breakthrough goal."
+      },
+      {
+        "hook": "Group A just got a whole lot interesting!",
+        "script": "Mexico's statement win sends shockwaves through the tournament, setting up an exciting finale and leaving South Africa with a must-win situation."
+      }
+    ],
+    "social": {
+      "x_thread": [
+        "Mexico dominates South Africa 2-0! #Mexico #SouthAfrica #GroupA",
+        "Edson \u00c1lvarez: The unsung hero of Mexico's win! #EdsonAlvarez #Mexico #MidfieldMasterclass",
+        "Group A just got a whole lot interesting! #GroupA #Mexico #SouthAfrica"
+      ],
+      "instagram": "Mexico takes control of Group A with a dominant 2-0 win over South Africa! #Mexico #SouthAfrica #GroupA",
+      "facebook": "Mexico's high-pressing defense and midfield mastery prove too much for South Africa, securing a 2-0 win and taking control of Group A.",
+      "community": "What are your thoughts on Mexico's dominant win over South Africa? Share your opinions and predictions for the rest of Group A!",
+      "linkedin": "Mexico's statement win over South Africa has significant implications for the tournament. What does this mean for the contenders and pretenders in Group A?"
+    }
+  }
+}

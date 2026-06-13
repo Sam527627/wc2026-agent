@@ -1,0 +1,240 @@
+{
+  "match": {
+    "id": "537345",
+    "utc": "2026-06-13T01:00:00Z",
+    "stage": "GROUP_STAGE",
+    "group": "GROUP_D",
+    "home": "United States",
+    "away": "Paraguay",
+    "home_goals": 4,
+    "away_goals": 1,
+    "winner": "HOME_TEAM"
+  },
+  "video_type": "A",
+  "package": {
+    "titles": [
+      {
+        "text": "US Dominates Paraguay 4-1",
+        "score": 90,
+        "lever": "surprise"
+      },
+      {
+        "text": "Can US Make Deep Run?",
+        "score": 85,
+        "lever": "curiosity"
+      },
+      {
+        "text": "US Smashes Paraguay in Group D",
+        "score": 80,
+        "lever": "conflict"
+      },
+      {
+        "text": "US Tactics Expose Paraguay",
+        "score": 75,
+        "lever": "consequence"
+      },
+      {
+        "text": "Paraguay Struggles to Recover",
+        "score": 70,
+        "lever": "stakes"
+      },
+      {
+        "text": "US Throws Group D Wide Open",
+        "score": 65,
+        "lever": "conflict"
+      },
+      {
+        "text": "US Proves Scoring Touch",
+        "score": 60,
+        "lever": "surprise"
+      },
+      {
+        "text": "US Adjusts Press to Conserve Energy",
+        "score": 55,
+        "lever": "curiosity"
+      },
+      {
+        "text": "Paraguay Faces Uphill Battle",
+        "score": 50,
+        "lever": "stakes"
+      },
+      {
+        "text": "US Creates 3-v-2 Overload",
+        "score": 45,
+        "lever": "consequence"
+      },
+      {
+        "text": "US Dominates Midfield",
+        "score": 40,
+        "lever": "conflict"
+      },
+      {
+        "text": "Paraguay Parks the Bus",
+        "score": 35,
+        "lever": "conflict"
+      },
+      {
+        "text": "US Targets Paraguay's Left Flank",
+        "score": 30,
+        "lever": "curiosity"
+      },
+      {
+        "text": "US Wins 4-1 Against Paraguay",
+        "score": 25,
+        "lever": "surprise"
+      },
+      {
+        "text": "Group D Showdown",
+        "score": 20,
+        "lever": "stakes"
+      },
+      {
+        "text": "US Seeks Scoring Touch",
+        "score": 15,
+        "lever": "curiosity"
+      },
+      {
+        "text": "Paraguay's Narrow Defensive Shape",
+        "score": 10,
+        "lever": "conflict"
+      },
+      {
+        "text": "US Looks to Advance",
+        "score": 9,
+        "lever": "stakes"
+      },
+      {
+        "text": "Paraguay Faces Must-Win Situation",
+        "score": 8,
+        "lever": "conflict"
+      },
+      {
+        "text": "US Controls Midfield",
+        "score": 7,
+        "lever": "consequence"
+      },
+      {
+        "text": "US Creates Clear Passing Lane",
+        "score": 6,
+        "lever": "curiosity"
+      },
+      {
+        "text": "Paraguay Struggles to Escape",
+        "score": 5,
+        "lever": "stakes"
+      },
+      {
+        "text": "US Suffocates Paraguay's Counter-Attacks",
+        "score": 4,
+        "lever": "consequence"
+      },
+      {
+        "text": "US Makes Tactical Tweaks",
+        "score": 3,
+        "lever": "curiosity"
+      },
+      {
+        "text": "Paraguay's Defensive Shape Exposed",
+        "score": 2,
+        "lever": "conflict"
+      },
+      {
+        "text": "US Seeks to Capitalize on Possession",
+        "score": 1,
+        "lever": "stakes"
+      },
+      {
+        "text": "US Aims to Break Down Paraguay",
+        "score": 0,
+        "lever": "conflict"
+      }
+    ],
+    "thumbnails": [
+      {
+        "text": "US Wins 4-1",
+        "emotion": "excitement",
+        "ctr_logic": "unexpected result",
+        "layout": "scoreboard"
+      },
+      {
+        "text": "Paraguay Parks Bus",
+        "emotion": "frustration",
+        "ctr_logic": "underdog story",
+        "layout": "defensive wall"
+      },
+      {
+        "text": "US Dominates Midfield",
+        "emotion": "confidence",
+        "ctr_logic": "stats and trends",
+        "layout": "midfield control"
+      },
+      {
+        "text": "US Targets Left Flank",
+        "emotion": "strategy",
+        "ctr_logic": "tactical insight",
+        "layout": "tactical board"
+      },
+      {
+        "text": "Paraguay Struggles",
+        "emotion": "desperation",
+        "ctr_logic": "underdog story",
+        "layout": "desperate attempt"
+      },
+      {
+        "text": "US Creates Overload",
+        "emotion": "cleverness",
+        "ctr_logic": "tactical insight",
+        "layout": "overload diagram"
+      },
+      {
+        "text": "US Suffocates Counter-Attacks",
+        "emotion": "dominance",
+        "ctr_logic": "stats and trends",
+        "layout": "pressure map"
+      },
+      {
+        "text": "US Makes Tweaks",
+        "emotion": "adaptability",
+        "ctr_logic": "strategy and tactics",
+        "layout": "tactical adjustment"
+      },
+      {
+        "text": "Paraguay Exposed",
+        "emotion": "vulnerability",
+        "ctr_logic": "weaknesses and flaws",
+        "layout": "exposed defense"
+      },
+      {
+        "text": "US Seeks to Advance",
+        "emotion": "ambition",
+        "ctr_logic": "stakes and consequences",
+        "layout": "group table"
+      }
+    ],
+    "shorts": [
+      {
+        "hook": "US Smashes Paraguay 4-1!",
+        "script": "The US dominated Paraguay in a 4-1 win, throwing Group D wide open. What does this mean for the tournament?"
+      },
+      {
+        "hook": "Can US Make Deep Run?",
+        "script": "The US has finally found their scoring touch, but can they make a deep run in the tournament? We analyze their chances."
+      },
+      {
+        "hook": "US Exposes Paraguay's Defense",
+        "script": "The US created a 3-v-2 overload, exposing Paraguay's defensive shape. How did they do it, and what does it mean for the rest of the tournament?"
+      }
+    ],
+    "social": {
+      "x_thread": [
+        "US dominates Paraguay 4-1 in Group D showdown! What does this mean for the tournament? #USMNT #WorldCup",
+        "Can the US make a deep run in the tournament? We analyze their chances after their 4-1 win over Paraguay. #USMNT #WorldCup",
+        "The US exposed Paraguay's defensive shape with a clever 3-v-2 overload. How did they do it, and what does it mean for the rest of the tournament? #USMNT #Tactics"
+      ],
+      "instagram": "The US dominates Paraguay 4-1 in Group D! What does this mean for the tournament? #USMNT #WorldCup",
+      "facebook": "The US has finally found their scoring touch, but can they make a deep run in the tournament? We analyze their chances after their 4-1 win over Paraguay.",
+      "community": "Discuss the US's 4-1 win over Paraguay and their chances of making a deep run in the tournament.",
+      "linkedin": "The US's 4-1 win over Paraguay has thrown Group D wide open. What does this mean for the tournament, and what can we learn from the US's tactics?"
+    }
+  }
+}

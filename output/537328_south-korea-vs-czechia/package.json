@@ -1,0 +1,260 @@
+{
+  "match": {
+    "id": "537328",
+    "utc": "2026-06-12T02:00:00Z",
+    "stage": "GROUP_STAGE",
+    "group": "GROUP_A",
+    "home": "South Korea",
+    "away": "Czechia",
+    "home_goals": 2,
+    "away_goals": 1,
+    "winner": "HOME_TEAM"
+  },
+  "video_type": "C",
+  "package": {
+    "titles": [
+      {
+        "text": "South Korea Stuns Czechia",
+        "score": 95,
+        "lever": "surprise"
+      },
+      {
+        "text": "Group A Chaos Ensues",
+        "score": 92,
+        "lever": "conflict"
+      },
+      {
+        "text": "South Korea's Tactical Masterclass",
+        "score": 90,
+        "lever": "consequence"
+      },
+      {
+        "text": "Czechia's World Cup Hopes Dwindle",
+        "score": 88,
+        "lever": "stakes"
+      },
+      {
+        "text": "The Rise of South Korea",
+        "score": 85,
+        "lever": "surprise"
+      },
+      {
+        "text": "Group A Wide Open",
+        "score": 82,
+        "lever": "conflict"
+      },
+      {
+        "text": "South Korea's High-Pressing Game",
+        "score": 80,
+        "lever": "consequence"
+      },
+      {
+        "text": "Czechia's Struggles Continue",
+        "score": 78,
+        "lever": "stakes"
+      },
+      {
+        "text": "South Korea's Bold Statement",
+        "score": 75,
+        "lever": "surprise"
+      },
+      {
+        "text": "The Impact of South Korea's Win",
+        "score": 72,
+        "lever": "consequence"
+      },
+      {
+        "text": "Group A's Unpredictable Nature",
+        "score": 70,
+        "lever": "conflict"
+      },
+      {
+        "text": "South Korea's Road to the Top",
+        "score": 68,
+        "lever": "surprise"
+      },
+      {
+        "text": "Czechia's Fight for Survival",
+        "score": 65,
+        "lever": "stakes"
+      },
+      {
+        "text": "The Tactical Breakdown",
+        "score": 62,
+        "lever": "consequence"
+      },
+      {
+        "text": "South Korea's Moment of Glory",
+        "score": 60,
+        "lever": "surprise"
+      },
+      {
+        "text": "Group A's Next Matchday",
+        "score": 58,
+        "lever": "conflict"
+      },
+      {
+        "text": "The Battle for Group A Supremacy",
+        "score": 55,
+        "lever": "stakes"
+      },
+      {
+        "text": "South Korea's Winning Formula",
+        "score": 52,
+        "lever": "consequence"
+      },
+      {
+        "text": "The Fall of Czechia",
+        "score": 50,
+        "lever": "surprise"
+      },
+      {
+        "text": "The Rise and Fall of Teams",
+        "score": 48,
+        "lever": "conflict"
+      },
+      {
+        "text": "South Korea's Winning Streak",
+        "score": 45,
+        "lever": "surprise"
+      },
+      {
+        "text": "The Group A Conundrum",
+        "score": 42,
+        "lever": "stakes"
+      },
+      {
+        "text": "The Tactical Analysis",
+        "score": 40,
+        "lever": "consequence"
+      },
+      {
+        "text": "The South Korea Effect",
+        "score": 38,
+        "lever": "surprise"
+      },
+      {
+        "text": "The Czechia Conundrum",
+        "score": 35,
+        "lever": "conflict"
+      },
+      {
+        "text": "The Group A Puzzle",
+        "score": 32,
+        "lever": "stakes"
+      },
+      {
+        "text": "The Winning Strategy",
+        "score": 30,
+        "lever": "consequence"
+      },
+      {
+        "text": "The Underdog Story",
+        "score": 28,
+        "lever": "surprise"
+      },
+      {
+        "text": "The Group A Showdown",
+        "score": 25,
+        "lever": "conflict"
+      },
+      {
+        "text": "The Road to Victory",
+        "score": 22,
+        "lever": "stakes"
+      },
+      {
+        "text": "The Tactical Insight",
+        "score": 20,
+        "lever": "consequence"
+      }
+    ],
+    "thumbnails": [
+      {
+        "text": "Korean Victory",
+        "emotion": "joy",
+        "ctr_logic": "emotional appeal",
+        "layout": "image with caption"
+      },
+      {
+        "text": "Czechia Falls",
+        "emotion": "sadness",
+        "ctr_logic": "curiosity gap",
+        "layout": "image with text overlay"
+      },
+      {
+        "text": "Group A Chaos",
+        "emotion": "confusion",
+        "ctr_logic": "pattern interrupt",
+        "layout": "image with multiple elements"
+      },
+      {
+        "text": "Tactical Masterclass",
+        "emotion": "excitement",
+        "ctr_logic": "social proof",
+        "layout": "image with quote"
+      },
+      {
+        "text": "South Korea Rises",
+        "emotion": "inspiration",
+        "ctr_logic": "storytelling",
+        "layout": "image with background"
+      },
+      {
+        "text": "Czechia Struggles",
+        "emotion": "empathy",
+        "ctr_logic": "problem agitation",
+        "layout": "image with text"
+      },
+      {
+        "text": "High-Pressing Game",
+        "emotion": "intensity",
+        "ctr_logic": "educational content",
+        "layout": "image with diagram"
+      },
+      {
+        "text": "Group A Standings",
+        "emotion": "anticipation",
+        "ctr_logic": "scarcity",
+        "layout": "image with table"
+      },
+      {
+        "text": "South Korea Wins",
+        "emotion": "happiness",
+        "ctr_logic": "emotional connection",
+        "layout": "image with headline"
+      },
+      {
+        "text": "Czechia's Future",
+        "emotion": "uncertainty",
+        "ctr_logic": "curiosity",
+        "layout": "image with question mark"
+      }
+    ],
+    "shorts": [
+      {
+        "hook": "South Korea stuns Czechia",
+        "script": "South Korea's 2-1 win over Czechia throws Group A into chaos. What does this mean for the rest of the tournament?"
+      },
+      {
+        "hook": "Group A chaos ensues",
+        "script": "The Group A standings have been turned upside down after South Korea's surprise win. Who will come out on top?"
+      },
+      {
+        "hook": "Tactical masterclass",
+        "script": "South Korea's coach outmaneuvered Czechia with a clever tactical switch. What can we learn from this masterclass?"
+      }
+    ],
+    "social": {
+      "x_thread": [
+        "South Korea stuns Czechia in Group A showdown",
+        "What does this mean for the rest of the tournament? #WorldCup",
+        "The Group A standings have been turned upside down! #football"
+      ],
+      "instagram": "South Korea's stunning win over Czechia has thrown Group A into chaos! What's your prediction for the rest of the tournament? #WorldCup",
+      "facebook": "South Korea's 2-1 win over Czechia has Group A on the edge of their seats! Who do you think will come out on top? #football",
+      "community": "Join the discussion! What does South Korea's win mean for the rest of the tournament? Share your thoughts and predictions!",
+      "linkedin": "The tactical implications of South Korea's win over Czechia. What can we learn from this masterclass? #sportsmanagement"
+    }
+  }
+}

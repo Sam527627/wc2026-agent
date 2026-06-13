@@ -1,0 +1,289 @@
+{
+  "match": {
+    "id": "537333",
+    "utc": "2026-06-12T19:00:00Z",
+    "stage": "GROUP_STAGE",
+    "group": "GROUP_B",
+    "home": "Canada",
+    "away": "Bosnia-Herzegovina",
+    "home_goals": 1,
+    "away_goals": 1,
+    "winner": "DRAW"
+  },
+  "video_type": "C",
+  "package": {
+    "titles": [
+      {
+        "text": "Canada Stunned by Bosnia",
+        "score": 92,
+        "lever": "surprise"
+      },
+      {
+        "text": "Bosnia Shocks Canada 1-1",
+        "score": 90,
+        "lever": "conflict"
+      },
+      {
+        "text": "Canada's Group B Hopes Dented",
+        "score": 88,
+        "lever": "consequence"
+      },
+      {
+        "text": "Bosnia Spoil Canada's Party",
+        "score": 85,
+        "lever": "conflict"
+      },
+      {
+        "text": "Canada Drop Points to Bosnia",
+        "score": 83,
+        "lever": "consequence"
+      },
+      {
+        "text": "Bosnia's Late Equalizer Stuns Canada",
+        "score": 82,
+        "lever": "surprise"
+      },
+      {
+        "text": "Canada's Title Hopes in Jeopardy",
+        "score": 80,
+        "lever": "stakes"
+      },
+      {
+        "text": "Bosnia's High-Pressing Game Pays Off",
+        "score": 78,
+        "lever": "insight"
+      },
+      {
+        "text": "Canada's Draw with Bosnia",
+        "score": 75,
+        "lever": "curiosity"
+      },
+      {
+        "text": "Bosnia's Comeback Against Canada",
+        "score": 73,
+        "lever": "conflict"
+      },
+      {
+        "text": "Canada's Group B Struggles Continue",
+        "score": 70,
+        "lever": "consequence"
+      },
+      {
+        "text": "Bosnia's Tactics Trouble Canada",
+        "score": 68,
+        "lever": "insight"
+      },
+      {
+        "text": "Canada's Bosnia Draw",
+        "score": 65,
+        "lever": "curiosity"
+      },
+      {
+        "text": "Bosnia's Shock Draw with Canada",
+        "score": 63,
+        "lever": "surprise"
+      },
+      {
+        "text": "Canada's Bosnia Result",
+        "score": 60,
+        "lever": "curiosity"
+      },
+      {
+        "text": "Bosnia's Canada Comeback",
+        "score": 58,
+        "lever": "conflict"
+      },
+      {
+        "text": "Canada's Group B Future",
+        "score": 55,
+        "lever": "consequence"
+      },
+      {
+        "text": "Bosnia's High-Pressing Tactics",
+        "score": 53,
+        "lever": "insight"
+      },
+      {
+        "text": "Canada's Bosnia Match",
+        "score": 50,
+        "lever": "curiosity"
+      },
+      {
+        "text": "Bosnia's Canada Draw",
+        "score": 48,
+        "lever": "surprise"
+      },
+      {
+        "text": "Canada's Bosnia Performance",
+        "score": 45,
+        "lever": "consequence"
+      },
+      {
+        "text": "Bosnia's Tactics Against Canada",
+        "score": 43,
+        "lever": "insight"
+      },
+      {
+        "text": "Canada's Group B Struggle",
+        "score": 40,
+        "lever": "consequence"
+      },
+      {
+        "text": "Bosnia's Canada Result",
+        "score": 38,
+        "lever": "curiosity"
+      },
+      {
+        "text": "Canada's Bosnia Reaction",
+        "score": 35,
+        "lever": "consequence"
+      },
+      {
+        "text": "Bosnia's Comeback Tactics",
+        "score": 33,
+        "lever": "insight"
+      },
+      {
+        "text": "Canada's Bosnia Analysis",
+        "score": 30,
+        "lever": "curiosity"
+      },
+      {
+        "text": "Bosnia's Canada Match",
+        "score": 28,
+        "lever": "surprise"
+      },
+      {
+        "text": "Canada's Group B Hopes",
+        "score": 25,
+        "lever": "stakes"
+      },
+      {
+        "text": "Bosnia's High-Pressing Game",
+        "score": 23,
+        "lever": "insight"
+      },
+      {
+        "text": "Canada's Bosnia Draw Reaction",
+        "score": 20,
+        "lever": "consequence"
+      },
+      {
+        "text": "Bosnia's Tactics Against Canada",
+        "score": 18,
+        "lever": "insight"
+      },
+      {
+        "text": "Canada's Bosnia Performance Review",
+        "score": 15,
+        "lever": "consequence"
+      },
+      {
+        "text": "Bosnia's Canada Comeback Analysis",
+        "score": 12,
+        "lever": "insight"
+      },
+      {
+        "text": "Canada's Group B Future Plans",
+        "score": 10,
+        "lever": "consequence"
+      },
+      {
+        "text": "Bosnia's High-Pressing Tactics Review",
+        "score": 8,
+        "lever": "insight"
+      },
+      {
+        "text": "Canada's Bosnia Match Review",
+        "score": 5,
+        "lever": "curiosity"
+      }
+    ],
+    "thumbnails": [
+      {
+        "text": "Canada Shocked",
+        "emotion": "surprise",
+        "ctr_logic": "emotional hook",
+        "layout": "bold text"
+      },
+      {
+        "text": "Bosnia's Joy",
+        "emotion": "happiness",
+        "ctr_logic": "positive emotion",
+        "layout": "image with text"
+      },
+      {
+        "text": "Canada's Disappointment",
+        "emotion": "sadness",
+        "ctr_logic": "negative emotion",
+        "layout": "image with text"
+      },
+      {
+        "text": "Bosnia's Tactics",
+        "emotion": "neutral",
+        "ctr_logic": "curiosity",
+        "layout": " diagram with text"
+      },
+      {
+        "text": "Canada's Future",
+        "emotion": "concern",
+        "ctr_logic": "uncertainty",
+        "layout": "image with text"
+      },
+      {
+        "text": "Bosnia's Comeback",
+        "emotion": "excitement",
+        "ctr_logic": "drama",
+        "layout": "image with text"
+      },
+      {
+        "text": "Canada's Struggle",
+        "emotion": "frustration",
+        "ctr_logic": "conflict",
+        "layout": "image with text"
+      },
+      {
+        "text": "Bosnia's Spoiler",
+        "emotion": "surprise",
+        "ctr_logic": "twist",
+        "layout": "bold text"
+      },
+      {
+        "text": "Canada's Hopes",
+        "emotion": "hope",
+        "ctr_logic": "positive emotion",
+        "layout": "image with text"
+      },
+      {
+        "text": "Bosnia's Victory",
+        "emotion": "pride",
+        "ctr_logic": "positive emotion",
+        "layout": "image with text"
+      }
+    ],
+    "shorts": [
+      {
+        "hook": "Canada stunned by Bosnia's late equalizer!",
+        "script": "Canada were on top, but Bosnia's high-pressing game paid off with a late equalizer. What does this mean for Canada's title hopes?"
+      },
+      {
+        "hook": "Bosnia spoil Canada's party with 1-1 draw!",
+        "script": "Bosnia's tactics caught Canada off guard, and they were able to snatch a draw. Can Canada recover from this setback?"
+      },
+      {
+        "hook": "Canada's draw with Bosnia throws Group B wide open!",
+        "script": "The draw between Canada and Bosnia has thrown the group into chaos. Who will come out on top?"
+      }
+    ],
+    "social": {
+      "x_thread": [
+        "Canada's draw with Bosnia has thrown Group B into chaos! #Canada #Bosnia #GroupB",
+        "Bosnia's high-pressing game paid off with a late equalizer against Canada! #Bosnia #Canada #Football"
+      ],
+      "instagram": "Canada's draw with Bosnia has thrown Group B into chaos! Who will come out on top? #Canada #Bosnia #GroupB",
+      "facebook": "Canada's draw with Bosnia has significant implications for the rest of the tournament. What does this mean for Canada's title hopes?",
+      "community": " Discuss the Canada-Bosnia match and its implications for the tournament. Who will come out on top?",
+      "linkedin": "The Canada-Bosnia match has highlighted the importance of tactics and strategy in football. What can we learn from this match?"
+    }
+  }
+}
