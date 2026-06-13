@@ -31,7 +31,10 @@ jobs:
           FOOTBALL_DATA_KEY: ${{ secrets.FOOTBALL_DATA_KEY }}
           GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
           COMPETITION: WC
-        run: python3 wc2026_agent.py
+        run: |
+          export FOOTBALL_DATA_KEY=$(echo "$FOOTBALL_DATA_KEY" | xargs)
+          export GROQ_API_KEY=$(echo "$GROQ_API_KEY" | xargs)
+          python3 wc2026_agent.py
 
       - name: Commit any new content
         run: |
