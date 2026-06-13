@@ -1,0 +1,290 @@
+{
+  "match": {
+    "id": "537334",
+    "utc": "2026-06-13T19:00:00Z",
+    "stage": "GROUP_STAGE",
+    "group": "GROUP_B",
+    "home": "Qatar",
+    "away": "Switzerland",
+    "home_goals": 1,
+    "away_goals": 1,
+    "winner": "DRAW"
+  },
+  "video_type": "C",
+  "package": {
+    "titles": [
+      {
+        "text": "Qatar on Brink of Disaster",
+        "score": 95,
+        "lever": "stakes"
+      },
+      {
+        "text": "Switzerland Takes Control",
+        "score": 92,
+        "lever": "conflict"
+      },
+      {
+        "text": "Group B Wide Open",
+        "score": 90,
+        "lever": "consequence"
+      },
+      {
+        "text": "Qatar's Full-Back Vulnerability",
+        "score": 88,
+        "lever": "surprise"
+      },
+      {
+        "text": "Tournament Implications",
+        "score": 85,
+        "lever": "consequence"
+      },
+      {
+        "text": "Qatar's Road to Recovery",
+        "score": 83,
+        "lever": "curiosity"
+      },
+      {
+        "text": "Switzerland's Winning Strategy",
+        "score": 80,
+        "lever": "conflict"
+      },
+      {
+        "text": "Host Nation Under Pressure",
+        "score": 78,
+        "lever": "stakes"
+      },
+      {
+        "text": "Group B Showdown",
+        "score": 75,
+        "lever": "consequence"
+      },
+      {
+        "text": "Qatar's Tactical Breakdown",
+        "score": 72,
+        "lever": "curiosity"
+      },
+      {
+        "text": "Switzerland's Midfield Dominance",
+        "score": 70,
+        "lever": "conflict"
+      },
+      {
+        "text": "Qatar's Full-Back Conundrum",
+        "score": 68,
+        "lever": "surprise"
+      },
+      {
+        "text": "Tournament Predictions",
+        "score": 65,
+        "lever": "curiosity"
+      },
+      {
+        "text": "Group B Update",
+        "score": 62,
+        "lever": "consequence"
+      },
+      {
+        "text": "Qatar's Next Match",
+        "score": 60,
+        "lever": "curiosity"
+      },
+      {
+        "text": "Switzerland's Chances",
+        "score": 58,
+        "lever": "conflict"
+      },
+      {
+        "text": "Qatar's Tactical Adjustments",
+        "score": 55,
+        "lever": "curiosity"
+      },
+      {
+        "text": "Group B Standings",
+        "score": 52,
+        "lever": "consequence"
+      },
+      {
+        "text": "Qatar's Road to Success",
+        "score": 50,
+        "lever": "curiosity"
+      },
+      {
+        "text": "Switzerland's Group B Dominance",
+        "score": 48,
+        "lever": "conflict"
+      },
+      {
+        "text": "Qatar's Full-Back Solution",
+        "score": 45,
+        "lever": "surprise"
+      },
+      {
+        "text": "Tournament Analysis",
+        "score": 42,
+        "lever": "curiosity"
+      },
+      {
+        "text": "Group B Preview",
+        "score": 40,
+        "lever": "consequence"
+      },
+      {
+        "text": "Qatar's Next Step",
+        "score": 38,
+        "lever": "curiosity"
+      },
+      {
+        "text": "Switzerland's Strategy",
+        "score": 35,
+        "lever": "conflict"
+      },
+      {
+        "text": "Qatar's Tactical Evolution",
+        "score": 32,
+        "lever": "curiosity"
+      },
+      {
+        "text": "Group B Update",
+        "score": 30,
+        "lever": "consequence"
+      },
+      {
+        "text": "Qatar's Full-Back Fix",
+        "score": 28,
+        "lever": "surprise"
+      },
+      {
+        "text": "Tournament Insights",
+        "score": 25,
+        "lever": "curiosity"
+      },
+      {
+        "text": "Group B Review",
+        "score": 22,
+        "lever": "consequence"
+      },
+      {
+        "text": "Qatar's Progress",
+        "score": 20,
+        "lever": "curiosity"
+      },
+      {
+        "text": "Switzerland's Group B Control",
+        "score": 18,
+        "lever": "conflict"
+      },
+      {
+        "text": "Qatar's Tactical Growth",
+        "score": 15,
+        "lever": "curiosity"
+      },
+      {
+        "text": "Group B Standings Update",
+        "score": 12,
+        "lever": "consequence"
+      },
+      {
+        "text": "Qatar's Next Match Preview",
+        "score": 10,
+        "lever": "curiosity"
+      },
+      {
+        "text": "Switzerland's Chances of Winning",
+        "score": 8,
+        "lever": "conflict"
+      },
+      {
+        "text": "Qatar's Full-Back Improvement",
+        "score": 5,
+        "lever": "surprise"
+      }
+    ],
+    "thumbnails": [
+      {
+        "text": "Qatar Shocked",
+        "emotion": "surprise",
+        "ctr_logic": "emotional hook",
+        "layout": "split-screen"
+      },
+      {
+        "text": "Switzerland Wins",
+        "emotion": "joy",
+        "ctr_logic": "result-oriented",
+        "layout": "full-screen"
+      },
+      {
+        "text": "Group B Chaos",
+        "emotion": "confusion",
+        "ctr_logic": "curiosity-driven",
+        "layout": "collage"
+      },
+      {
+        "text": "Qatar Struggles",
+        "emotion": "sadness",
+        "ctr_logic": "empathy-based",
+        "layout": "close-up"
+      },
+      {
+        "text": "Switzerland Dominates",
+        "emotion": "confidence",
+        "ctr_logic": "authority-established",
+        "layout": "highlight-reel"
+      },
+      {
+        "text": "Tournament Upset",
+        "emotion": "shock",
+        "ctr_logic": "unpredictability",
+        "layout": "split-screen"
+      },
+      {
+        "text": "Qatar's Hope",
+        "emotion": "optimism",
+        "ctr_logic": "inspirational",
+        "layout": "full-screen"
+      },
+      {
+        "text": "Group B Intensity",
+        "emotion": "tension",
+        "ctr_logic": "high-stakes",
+        "layout": "collage"
+      },
+      {
+        "text": "Switzerland's Strategy",
+        "emotion": "focus",
+        "ctr_logic": "tactical",
+        "layout": "close-up"
+      },
+      {
+        "text": "Qatar's Fight",
+        "emotion": "determination",
+        "ctr_logic": "underdog-story",
+        "layout": "highlight-reel"
+      }
+    ],
+    "shorts": [
+      {
+        "hook": "Qatar's shocking start!",
+        "script": "Qatar's disappointing start to the tournament has left them on the brink of disaster. Can they recover?"
+      },
+      {
+        "hook": "Switzerland takes control!",
+        "script": "Switzerland's dominant performance has put them in the driver's seat. Can Qatar bounce back?"
+      },
+      {
+        "hook": "Group B chaos!",
+        "script": "The group stage is heating up, and Group B is wide open. Who will emerge on top?"
+      }
+    ],
+    "social": {
+      "x_thread": [
+        "Qatar's tournament hopes are hanging by a thread! #Qatar #Tournament",
+        "Switzerland is on fire! Can they keep up the momentum? #Switzerland #Tournament",
+        "Group B is anyone's game! Who will come out on top? #GroupB #Tournament"
+      ],
+      "instagram": "Qatar's shocking start to the tournament has left them on the brink of disaster. Can they recover? #Qatar #Tournament",
+      "facebook": "Switzerland's dominant performance has put them in the driver's seat. Can Qatar bounce back? #Switzerland #Tournament",
+      "community": "Join the discussion! Who will emerge on top in Group B? #GroupB #Tournament",
+      "linkedin": "The tournament is heating up, and Group B is wide open. What are your predictions? #Tournament #GroupB"
+    }
+  }
+}
