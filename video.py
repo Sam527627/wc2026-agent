@@ -43,15 +43,31 @@ def parse_sections(script: str) -> dict:
     return sections
 
 def duration_of_mp3(path: str) -> float:
-    result = subprocess.run(
-        ["ffprobe","-v","quiet","-show_entries","format=duration",
-         "-of","default=noprint_wrappers=1:nokey=1", path],
-        capture_output=True, text=True
-    )
+    """Get audio duration. ffprobe preferred, ffmpeg as fallback."""
     try:
-        return float(result.stdout.strip())
+        r = subprocess.run(
+            ["ffprobe","-v","quiet","-show_entries","format=duration",
+             "-of","default=noprint_wrappers=1:nokey=1", path],
+            capture_output=True, text=True)
+        v = float(r.stdout.strip())
+        if 0.1 < v < 600:
+            return v
     except Exception:
-        return 5.0
+        pass
+    try:
+        # ffmpeg fallback — parse duration from stderr
+        r = subprocess.run(["ffmpeg","-i",path,"-f","null","-"],
+                           capture_output=True, text=True)
+        for token in r.stderr.split():
+            try:
+                v = float(token)
+                if 0.1 < v < 600:
+                    return v
+            except ValueError:
+                pass
+    except Exception:
+        pass
+    return 5.0
 
 def make_silent_mp3(duration: float, out: str):
     subprocess.run(

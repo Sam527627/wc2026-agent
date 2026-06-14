@@ -106,12 +106,27 @@ def build_short(match, hook, script_text, out_dir, index=1):
     voice.generate_voiceover(full_text, audio_path)
 
     # Get audio duration
-    res = subprocess.run(
-        ["ffprobe","-v","quiet","-show_entries","format=duration",
-         "-of","default=noprint_wrappers=1:nokey=1", audio_path],
-        capture_output=True, text=True)
-    try:    dur = min(float(res.stdout.strip()), 59.5)
-    except: dur = 45.0
+    # ffprobe preferred, ffmpeg fallback
+    dur = 45.0
+    try:
+        res = subprocess.run(
+            ["ffprobe","-v","quiet","-show_entries","format=duration",
+             "-of","default=noprint_wrappers=1:nokey=1", audio_path],
+            capture_output=True, text=True)
+        dur = min(float(res.stdout.strip()), 59.5)
+    except Exception:
+        try:
+            res = subprocess.run(["ffmpeg","-i",audio_path,"-f","null","-"],
+                                 capture_output=True, text=True)
+            for token in res.stderr.split():
+                try:
+                    v = float(token)
+                    if 0.1 < v < 60:
+                        dur = v; break
+                except ValueError:
+                    pass
+        except Exception:
+            pass
 
     # Assemble vertical video
     subprocess.run([
