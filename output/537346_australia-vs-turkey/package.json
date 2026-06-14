@@ -1,0 +1,31 @@
+{
+  "match": {
+    "id": "537346",
+    "utc": "2026-06-14T04:00:00Z",
+    "stage": "GROUP_STAGE",
+    "group": "GROUP_D",
+    "home": "Australia",
+    "away": "Turkey",
+    "home_goals": 2,
+    "away_goals": 0,
+    "winner": "HOME_TEAM"
+  },
+  "type": "C",
+  "best_title": "Australia Stuns Turkey",
+  "description": "Australia takes a huge step towards the semifinals with a 2-0 win over Turkey. The Socceroos' solid defense and clinical finishing made the difference. Watch as we break down the match: 0:00 intro, 2:00 Turkey's struggles, 5:00 Australia's counter-attack, 10:00 halftime adjustments, 15:00 the final whistle. #WorldCup2026 #FIFA #football #Australia #Turkey #soccer #WC2026 #GroupD #Socceroos #TurkeyNationalTeam",
+  "tags": [
+    "World Cup 2026",
+    "FIFA WC 2026",
+    "football analysis",
+    "WC2026",
+    "Australia",
+    "Turkey",
+    "soccer",
+    "football"
+  ],
+  "youtube_id": null,
+  "youtube_url": null,
+  "shorts_ids": [],
+  "shorts_urls": [],
+  "generated_at": "2026-06-14T08:14:04.097316"
+}
