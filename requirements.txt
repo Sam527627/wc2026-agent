@@ -1,1 +1,7 @@
 requests
+matplotlib
+Pillow
+numpy
+edge-tts
+google-auth-oauthlib
+google-auth

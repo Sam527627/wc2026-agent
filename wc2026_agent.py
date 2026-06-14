@@ -1,382 +1,468 @@
 #!/usr/bin/env python3
 """
-WC2026 CONTENT AGENT  —  autonomous, copyright-safe World Cup content factory
-=============================================================================
+WC2026 FACELESS CONTENT MACHINE  v3.1  — HARDENED + COMPLETE
+=============================================================
+100% automated. Zero human input needed during the tournament.
 
-What it does, end to end, every time it runs:
-  1. DETECT   : asks football-data.org which World Cup matches just finished
-  2. DEDUPE   : skips matches it already processed (state file)
-  3. ANALYSE  : scores the 11 video types (A-K) and picks the strongest angle
-  4. WRITE    : Groq LLM writes a 3-5 min storytelling script (HOOK->CTA)
-  5. PACKAGE  : 30 scored titles, 10 thumbnail concepts, 3 Shorts, social posts
-  6. SAVE     : drops everything into output/<match>/ as readable files
+Every 2 hours on GitHub Actions:
+  1.  Detects newly-finished World Cup matches (football-data.org free)
+  2.  Reads STRATEGY.md — self-improving from real YouTube analytics
+  3.  Picks strongest angle from 11 video types (A-K)
+  4.  Writes 650-word premium storytelling script (Groq LLM, free)
+  5.  Generates 6 visual frames — title card, stats, tactics, momentum,
+      sections, thumbnail (matplotlib + Pillow, 1920x1080)
+  6.  Neural voiceover — edge-tts (Microsoft neural) → espeak-ng fallback
+  7.  Assembles 1080p 16:9 MP4 with burnt-in captions (FFmpeg)
+  8.  3 vertical 9:16 Shorts for YouTube/TikTok/Reels
+  9.  30 scored titles, 10 thumbnail concepts, social posts for 5 platforms
+  10. Uploads main video + thumbnail + 3 Shorts to YouTube
+  11. Saves all content to repo — never reprocesses same match
 
-It is NOT a "press button, 100 identical videos" machine (that gets channels
-deleted under YouTube's 2026 inauthentic-content policy). It does the boring
-80% and hands YOU a finished script + assets to record/cut in your own voice.
-
-RUN IT:
-    pip install requests
-    export FOOTBALL_DATA_KEY="your_key"     # https://www.football-data.org/client/register
-    export GROQ_API_KEY="your_key"          # https://console.groq.com/keys
-    python3 wc2026_agent.py                  # one pass over finished matches
-    python3 wc2026_agent.py --watch          # loop forever, poll every 15 min
-    python3 wc2026_agent.py --demo           # no keys needed, uses a sample match
-
-AUTOMATE IT (so you never touch it):
-    Linux/Mac cron  (every 30 min):
-        */30 * * * * cd /path/to/wc2026 && /usr/bin/python3 wc2026_agent.py >> run.log 2>&1
-    Windows Task Scheduler:
-        Action = python.exe  Args = wc2026_agent.py  Trigger = repeat every 30 min
+GITHUB SECRETS (all free):
+  FOOTBALL_DATA_KEY       football-data.org
+  GROQ_API_KEY            console.groq.com
+  YOUTUBE_CLIENT_ID       Google Cloud Console
+  YOUTUBE_CLIENT_SECRET   Google Cloud Console
+  YOUTUBE_REFRESH_TOKEN   run setup_youtube.py once
 """
 
-import os
-import re
-import sys
-import json
-import time
-import datetime as dt
-
+import os, re, sys, json, time, datetime as dt
 try:
     import requests
 except ImportError:
-    sys.exit("Missing dependency. Run:  pip install requests")
+    sys.exit("pip install requests")
 
-# ----------------------------------------------------------------------------
-# CONFIG  (override any of these with environment variables)
-# ----------------------------------------------------------------------------
-FOOTBALL_DATA_KEY = os.environ.get("FOOTBALL_DATA_KEY", "")
-GROQ_API_KEY      = os.environ.get("GROQ_API_KEY", "")
-COMPETITION       = os.environ.get("COMPETITION", "WC")          # WC = World Cup
-GROQ_MODEL        = os.environ.get("GROQ_MODEL", "llama-3.3-70b-versatile")
-POLL_SECONDS      = int(os.environ.get("POLL_SECONDS", "900"))    # 15 min
-OUTPUT_DIR        = os.environ.get("OUTPUT_DIR", "output")
-STATE_FILE        = os.path.join(OUTPUT_DIR, "processed_matches.json")
-
-FOOTBALL_BASE = "https://api.football-data.org/v4"
-GROQ_URL      = "https://api.groq.com/openai/v1/chat/completions"
+# ── CONFIG ───────────────────────────────────────────────────────────────────
+FOOTBALL_DATA_KEY     = os.environ.get("FOOTBALL_DATA_KEY","")
+GROQ_API_KEY          = os.environ.get("GROQ_API_KEY","")
+YOUTUBE_CLIENT_ID     = os.environ.get("YOUTUBE_CLIENT_ID","")
+YOUTUBE_CLIENT_SECRET = os.environ.get("YOUTUBE_CLIENT_SECRET","")
+YOUTUBE_REFRESH_TOKEN = os.environ.get("YOUTUBE_REFRESH_TOKEN","")
+COMPETITION           = os.environ.get("COMPETITION","WC")
+GROQ_MODEL            = os.environ.get("GROQ_MODEL","llama-3.3-70b-versatile")
+OUTPUT_DIR            = os.environ.get("OUTPUT_DIR","output")
+SKIP_VIDEO            = os.environ.get("SKIP_VIDEO","").lower()=="true"
+SKIP_UPLOAD           = os.environ.get("SKIP_UPLOAD","").lower()=="true"
+SKIP_SHORTS           = os.environ.get("SKIP_SHORTS","").lower()=="true"
+STATE_FILE            = os.path.join(OUTPUT_DIR,"processed_matches.json")
+STRATEGY_FILE         = os.path.join(OUTPUT_DIR,"STRATEGY.md")
+FOOTBALL_BASE         = "https://api.football-data.org/v4"
+GROQ_URL              = "https://api.groq.com/openai/v1/chat/completions"
 
 VIDEO_TYPES = {
-    "A": "Deep Match Analysis",
-    "B": "Tactical Breakdown",
-    "C": "Group Implications",
-    "D": "Upset Alert",
-    "E": "Player Spotlight",
-    "F": "Prediction Update",
-    "G": "Hidden Story",
-    "H": "Daily World Cup Intelligence Report",
-    "I": "Tournament Simulation",
-    "J": "Power Ranking Update",
-    "K": "What-If Scenario",
+    "A":"Deep Match Analysis",    "B":"Tactical Breakdown",
+    "C":"Group Implications",     "D":"Upset Alert",
+    "E":"Player Spotlight",       "F":"Prediction Update",
+    "G":"Hidden Story",           "H":"Daily WC Intelligence Report",
+    "I":"Tournament Simulation",  "J":"Power Ranking Update",
+    "K":"What-If Scenario",
 }
 
+def log(msg): print(f"[{dt.datetime.now():%H:%M:%S}] {msg}", flush=True)
+def slug(s):  return re.sub(r"[^a-z0-9]+","-",s.lower()).strip("-")[:60]
 
-def log(msg):
-    print(f"[{dt.datetime.now():%H:%M:%S}] {msg}", flush=True)
-
-
-# ----------------------------------------------------------------------------
-# 1. DETECT  — pull finished matches
-# ----------------------------------------------------------------------------
-def fetch_finished_matches():
+# ── MATCH DATA ────────────────────────────────────────────────────────────────
+def fetch_matches():
     if not FOOTBALL_DATA_KEY:
-        log("No FOOTBALL_DATA_KEY set — skipping live fetch.")
+        log("No FOOTBALL_DATA_KEY set — skipping live fetch")
         return []
-    url = f"{FOOTBALL_BASE}/competitions/{COMPETITION}/matches?status=FINISHED"
     try:
-        r = requests.get(url, headers={"X-Auth-Token": FOOTBALL_DATA_KEY}, timeout=30)
+        r = requests.get(
+            f"{FOOTBALL_BASE}/competitions/{COMPETITION}/matches?status=FINISHED",
+            headers={"X-Auth-Token": FOOTBALL_DATA_KEY}, timeout=30)
         r.raise_for_status()
+        return [_norm(m) for m in r.json().get("matches",[])]
     except Exception as e:
-        log(f"Data fetch failed: {e}")
-        return []
-    return [normalize_match(m) for m in r.json().get("matches", [])]
+        log(f"Football API error: {e}"); return []
 
-
-def normalize_match(m):
-    """Reduce the API blob to a clean dict we control."""
-    score = m.get("score", {}).get("fullTime", {})
+def _norm(m):
+    sc = m.get("score",{}).get("fullTime",{})
+    # BUG FIX: coerce None scores to 0 safely
+    def safe_int(v): 
+        try: return int(v) if v is not None else 0
+        except: return 0
     return {
-        "id": str(m.get("id")),
-        "utc": m.get("utcDate", ""),
-        "stage": m.get("stage", ""),
-        "group": m.get("group") or "",
-        "home": m.get("homeTeam", {}).get("name", "Home"),
-        "away": m.get("awayTeam", {}).get("name", "Away"),
-        "home_goals": score.get("home"),
-        "away_goals": score.get("away"),
-        "winner": m.get("score", {}).get("winner", ""),  # HOME_TEAM/AWAY_TEAM/DRAW
+        "id":         str(m.get("id","")),
+        "utc":        m.get("utcDate",""),
+        "stage":      m.get("stage","GROUP_STAGE"),
+        "group":      m.get("group") or "",
+        "home":       m.get("homeTeam",{}).get("name","Home"),
+        "away":       m.get("awayTeam",{}).get("name","Away"),
+        "home_goals": safe_int(sc.get("home")),
+        "away_goals": safe_int(sc.get("away")),
+        "winner":     m.get("score",{}).get("winner",""),
     }
 
-
-# ----------------------------------------------------------------------------
-# 2. STATE  — never process the same match twice
-# ----------------------------------------------------------------------------
+# ── STATE (dedupe — never process same match twice) ───────────────────────────
 def load_state():
     if os.path.exists(STATE_FILE):
-        with open(STATE_FILE) as f:
-            return set(json.load(f))
+        try:
+            with open(STATE_FILE) as f: return set(json.load(f))
+        except Exception:
+            log("State file corrupt — starting fresh")
     return set()
-
 
 def save_state(done):
     os.makedirs(OUTPUT_DIR, exist_ok=True)
-    with open(STATE_FILE, "w") as f:
-        json.dump(sorted(done), f, indent=2)
+    with open(STATE_FILE,"w") as f: json.dump(sorted(done), f, indent=2)
 
+# ── STRATEGY (self-improvement feedback) ─────────────────────────────────────
+def load_strategy():
+    if os.path.exists(STRATEGY_FILE):
+        try:
+            with open(STRATEGY_FILE) as f: return f.read()
+        except Exception: pass
+    return ""
 
-# ----------------------------------------------------------------------------
-# 3. ANALYSE  — heuristic score to pick the strongest video angle
-# ----------------------------------------------------------------------------
-def score_video_types(m):
-    """Cheap, fast scoring so we don't burn an LLM call just to choose an angle.
-    The LLM still gets the final say but starts from this ranking."""
-    h, a = m.get("home_goals") or 0, m.get("away_goals") or 0
-    margin = abs(h - a)
-    total = h + a
-    scores = {k: 1.0 for k in VIDEO_TYPES}
+# ── ANGLE SELECTION ───────────────────────────────────────────────────────────
+def score_types(m):
+    h = int(m.get("home_goals") or 0)
+    a = int(m.get("away_goals") or 0)
+    mg, tot = abs(h-a), h+a
+    s = {k:1.0 for k in VIDEO_TYPES}
+    if mg >= 3:  s["D"]+=4; s["A"]+=2
+    if tot >= 4: s["A"]+=2; s["E"]+=2
+    if m.get("winner")=="DRAW": s["C"]+=3; s["K"]+=2
+    if m.get("stage") in("GROUP_STAGE","LEAGUE_STAGE"): s["C"]+=3; s["F"]+=2
+    if m.get("stage") in("LAST_16","QUARTER_FINALS","SEMI_FINALS","FINAL"):
+        s["B"]+=3; s["G"]+=2
+    s["H"] += 1.5
+    return sorted(s.items(), key=lambda kv:kv[1], reverse=True)
 
-    if margin >= 3:
-        scores["D"] += 4   # blowout -> upset / giant in trouble energy
-        scores["A"] += 2
-    if total >= 4:
-        scores["A"] += 2   # goal-fest = juicy match analysis
-        scores["E"] += 2   # someone had a monster game
-    if m["winner"] == "DRAW":
-        scores["C"] += 3   # draws scramble the group table
-        scores["K"] += 2
-    if m["stage"] in ("GROUP_STAGE", "LEAGUE_STAGE"):
-        scores["C"] += 3   # qualification implications always relevant
-        scores["F"] += 2
-    if m["stage"] in ("LAST_16", "QUARTER_FINALS", "SEMI_FINALS", "FINAL"):
-        scores["B"] += 3   # knockouts reward tactical depth
-        scores["G"] += 2
-    scores["H"] += 1.5     # daily report is always a safe evergreen option
-    ranked = sorted(scores.items(), key=lambda kv: kv[1], reverse=True)
-    return ranked
-
-
-def build_data_context(m):
-    res = f"{m['home']} {m['home_goals']}-{m['away_goals']} {m['away']}"
-    stage = m["stage"].replace("_", " ").title()
-    grp = f" (Group {m['group']})" if m["group"] else ""
-    return f"FINAL: {res}\nStage: {stage}{grp}\nDate: {m['utc']}"
-
-
-# ----------------------------------------------------------------------------
-# 4 + 5. GENERATE  — call Groq for script, then for the packaging
-# ----------------------------------------------------------------------------
-def groq_chat(system, user, temperature=0.8, mock=None):
-    if mock is not None:                       # demo mode without a key
-        return mock
-    if not GROQ_API_KEY:
-        raise RuntimeError("GROQ_API_KEY not set — cannot generate.")
-    payload = {
-        "model": GROQ_MODEL,
-        "temperature": temperature,
-        "messages": [
-            {"role": "system", "content": system},
-            {"role": "user", "content": user},
-        ],
-    }
-    r = requests.post(
-        GROQ_URL,
-        headers={"Authorization": f"Bearer {GROQ_API_KEY}",
-                 "Content-Type": "application/json"},
-        json=payload, timeout=120,
-    )
+# ── LLM ───────────────────────────────────────────────────────────────────────
+def groq(system, user, temp=0.8):
+    if not GROQ_API_KEY: raise RuntimeError("GROQ_API_KEY not set")
+    r = requests.post(GROQ_URL,
+        headers={"Authorization":f"Bearer {GROQ_API_KEY}",
+                 "Content-Type":"application/json"},
+        json={"model":GROQ_MODEL,"temperature":temp,
+              "messages":[{"role":"system","content":system},
+                          {"role":"user","content":user}]},
+        timeout=120)
     r.raise_for_status()
     return r.json()["choices"][0]["message"]["content"]
 
-
 def parse_json(text):
-    """LLMs love wrapping JSON in prose / fences. Dig it out safely."""
-    text = re.sub(r"```(?:json)?", "", text).strip()
-    start, end = text.find("{"), text.rfind("}")
-    if start != -1 and end != -1:
-        text = text[start:end + 1]
+    """Extract JSON from LLM output that may contain prose/fences."""
+    text = re.sub(r"```(?:json)?","",text).strip()
+    s, e = text.find("{"), text.rfind("}")
+    if s != -1 and e != -1: text = text[s:e+1]
     return json.loads(text)
 
+SCRIPT_SYS = """You are the head writer of a premium football YouTube channel like Tifo Football.
+Confident human storytelling voice — never robotic match summaries.
+Zero broadcaster footage — describe [visual cues in brackets] for original charts and tactical boards.
+Be specific and bold. Never invent statistics. Every sentence must earn its place."""
 
-SCRIPT_SYSTEM = (
-    "You are the head writer of a premium football analysis YouTube channel, "
-    "comparable to Tifo or The Athletic. You write in a confident, human, "
-    "storytelling voice — never robotic match-report language. You use ZERO "
-    "broadcaster footage; everything is described so it can be shown with "
-    "original charts, tactical boards, and data visuals. Be specific and bold, "
-    "but never invent fake stats — only reason from the data you are given."
-)
+PACKAGE_SYS = """You are a YouTube growth strategist at the top of your field.
+Write irresistible, honest (no lie-bait) packaging that maximises CTR and retention.
+STRICT JSON only — zero prose before or after, zero markdown fences."""
 
-PACKAGE_SYSTEM = (
-    "You are a YouTube growth strategist. You write irresistible, honest "
-    "(non-clickbait-lie) packaging that maximizes CTR and retention. "
-    "Return STRICT JSON only — no prose, no markdown fences."
-)
-
-
-def gen_script(m, ctx, video_type_code, mock=None):
-    vt = VIDEO_TYPES[video_type_code]
+def gen_script(m, vt_code, strategy=""):
+    ctx  = f"FINAL: {m['home']} {m['home_goals']}-{m['away_goals']} {m['away']}\n"
+    ctx += f"Stage: {m['stage'].replace('_',' ').title()}"
+    ctx += f"  Group {m['group']}\n" if m.get("group") else "\n"
+    strat = f"\nCHANNEL STRATEGY (apply these learnings):\n{strategy[:600]}\n" if strategy else ""
     user = f"""Match data:
-{ctx}
+{ctx}{strat}
+Video type: TYPE {vt_code} — {VIDEO_TYPES[vt_code]}
 
-Chosen video format: TYPE {video_type_code} — {vt}
+Write a 3-5 min YouTube script (~650 words) with EXACTLY these section headers on their own line:
+HOOK
+CONFLICT
+BREAKDOWN
+BIG INSIGHT
+TOURNAMENT IMPACT
+PREDICTION
+CTA
 
-Write a 3-5 minute YouTube script (~600-750 words) with these labelled sections:
-HOOK (first 10 sec must stop the scroll, tease the payoff, no fluff)
-CONFLICT (the central tension / question of the match)
-BREAKDOWN (what happened and WHY — reference tactics/momentum, describe the
-           charts or tactical-board moments to show on screen in [brackets])
-BIG INSIGHT (the thing most viewers missed)
-TOURNAMENT IMPACT (what changes now — group/bracket/momentum)
-PREDICTION (a bold but defensible call about what happens next)
-CTA (ask for sub + tease the next video)
+Rules:
+- HOOK: first 8 words must contain a specific number or surprising fact. No fluff. Stop the scroll.
+- CONFLICT: the one central tension that defines this match
+- BREAKDOWN: describe tactics with [visual cue in square brackets] for every key moment
+- BIG INSIGHT: something NOT in any match report — the hidden story
+- TOURNAMENT IMPACT: specific consequence for the group table and bracket
+- PREDICTION: a specific outcome with reasoning, not vague language
+- CTA: name tomorrow's exact topic to create FOMO
+- Overall tone: confident sports documentary narrator"""
+    return groq(SCRIPT_SYS, user, temp=0.85)
 
-Keep it punchy. Mark on-screen visual cues in [square brackets]."""
-    return groq_chat(SCRIPT_SYSTEM, user, temperature=0.85, mock=mock)
-
-
-def gen_package(m, ctx, script, mock=None):
-    user = f"""Match: {m['home']} {m['home_goals']}-{m['away_goals']} {m['away']}
-Script:
+def gen_package(m, script):
+    h, a = m['home_goals'], m['away_goals']
+    user = f"""Match: {m['home']} {h}-{a} {m['away']}
+Script (first 2500 chars):
 \"\"\"{script[:2500]}\"\"\"
 
-Return STRICT JSON with this exact shape:
+Return STRICT JSON with this EXACT structure (no extra keys, no missing keys):
 {{
-  "titles": [{{"text": "...", "score": 0-100, "lever": "curiosity|stakes|conflict|consequence|surprise"}}],  // EXACTLY 30, sorted best first
-  "thumbnails": [{{"text": "max 4 words on image", "emotion": "...", "ctr_logic": "...", "layout": "..."}}],   // EXACTLY 10
-  "shorts": [{{"hook": "first 3 sec line", "script": "30-60s vertical script"}}],                              // EXACTLY 3
-  "social": {{"x_thread": ["tweet1","..."], "instagram": "...", "facebook": "...", "community": "...", "linkedin": "..."}}
+  "best_title": "the single best title (curiosity + stakes, under 70 chars, no CAPS LOCK spam)",
+  "description": "YouTube description ~200 words: what happened, why it matters, 5 timestamps, 10 hashtags",
+  "tags": ["World Cup 2026","FIFA WC 2026","football analysis","WC2026","{m['home']}","{m['away']}","soccer","football"],
+  "titles": [
+    {{"text": "title string", "score": 0-100, "lever": "curiosity|stakes|conflict|consequence|surprise"}}
+  ],
+  "thumbnails": [
+    {{"text": "max 4 words for image text", "emotion": "one word", "ctr_logic": "why this works", "layout": "describe the visual layout"}}
+  ],
+  "shorts": [
+    {{"hook": "first 3 sec hook — must shock or surprise", "script": "30-60s punchy vertical script"}}
+  ],
+  "social": {{
+    "x_thread": ["1/ hook tweet with emoji 🧵", "2/ key insight", "3/ bold prediction", "4/ CTA with channel mention"],
+    "instagram": "caption with emojis, 100-150 words, ends with question to drive comments",
+    "facebook": "engaging 80-word post, shares the big insight",
+    "community": "YouTube community post — ask a question to drive comments (under 100 words)",
+    "linkedin": "professional tactical angle, 80 words, no emojis"
+  }}
 }}
-No text outside the JSON."""
-    if isinstance(mock, dict):          # demo mode hands us a ready dict
-        return mock
-    raw = groq_chat(PACKAGE_SYSTEM, user, temperature=0.7, mock=mock)
-    return parse_json(raw)
 
+REQUIREMENTS:
+- titles: EXACTLY 30 items, sorted best-first
+- thumbnails: EXACTLY 10 items
+- shorts: EXACTLY 3 items
+- No text whatsoever outside the JSON object"""
+    raw = groq(PACKAGE_SYS, user, temp=0.7)
+    try:
+        return parse_json(raw)
+    except json.JSONDecodeError:
+        # Retry once with stricter prompt
+        log("JSON parse failed — retrying package generation")
+        raw2 = groq(PACKAGE_SYS, user + "\n\nIMPORTANT: Return ONLY the JSON object, nothing else.", temp=0.5)
+        return parse_json(raw2)
 
-# ----------------------------------------------------------------------------
-# 6. SAVE
-# ----------------------------------------------------------------------------
-def slug(s):
-    return re.sub(r"[^a-z0-9]+", "-", s.lower()).strip("-")
+# ── YOUTUBE ───────────────────────────────────────────────────────────────────
+def get_yt_token():
+    if not all([YOUTUBE_CLIENT_ID, YOUTUBE_CLIENT_SECRET, YOUTUBE_REFRESH_TOKEN]):
+        return None
+    try:
+        r = requests.post("https://oauth2.googleapis.com/token", data={
+            "client_id":     YOUTUBE_CLIENT_ID,
+            "client_secret": YOUTUBE_CLIENT_SECRET,
+            "refresh_token": YOUTUBE_REFRESH_TOKEN,
+            "grant_type":    "refresh_token",
+        }, timeout=15)
+        return r.json().get("access_token") if r.status_code==200 else None
+    except Exception as e:
+        log(f"YT token error: {e}"); return None
 
+def yt_upload(token, video_path, title, description, tags, is_short=False):
+    if not token or not os.path.exists(video_path):
+        return None
+    meta = {
+        "snippet": {"title":title[:100],"description":description,
+                    "tags":tags,"categoryId":"17","defaultLanguage":"en"},
+        "status":  {"privacyStatus":"public","selfDeclaredMadeForKids":False},
+    }
+    try:
+        init = requests.post(
+            "https://www.googleapis.com/upload/youtube/v3/videos"
+            "?uploadType=resumable&part=snippet,status",
+            headers={"Authorization":f"Bearer {token}",
+                     "Content-Type":"application/json",
+                     "X-Upload-Content-Type":"video/mp4"},
+            json=meta, timeout=30)
+        if init.status_code != 200:
+            log(f"YT init failed: {init.status_code}"); return None
+        upload_url = init.headers["Location"]
+        with open(video_path,"rb") as f: data = f.read()
+        res = requests.put(upload_url,
+            headers={"Authorization":f"Bearer {token}",
+                     "Content-Type":"video/mp4",
+                     "Content-Length":str(len(data))},
+            data=data, timeout=300)
+        if res.status_code not in(200,201):
+            log(f"YT upload failed: {res.status_code}"); return None
+        vid_id = res.json().get("id")
+        kind = "Short" if is_short else "Video"
+        log(f"✅ {kind} live → https://youtube.com/watch?v={vid_id}")
+        return vid_id
+    except Exception as e:
+        log(f"Upload exception: {e}"); return None
 
-def save_package(m, vt_code, ranking, script, pkg):
-    folder = os.path.join(OUTPUT_DIR, f"{m['id']}_{slug(m['home'])}-vs-{slug(m['away'])}")
+def yt_set_thumbnail(token, video_id, thumb_path):
+    if not token or not os.path.exists(thumb_path): return
+    try:
+        with open(thumb_path,"rb") as f: td = f.read()
+        requests.post(
+            f"https://www.googleapis.com/upload/youtube/v3/thumbnails/set"
+            f"?videoId={video_id}&uploadType=media",
+            headers={"Authorization":f"Bearer {token}",
+                     "Content-Type":"image/jpeg","Content-Length":str(len(td))},
+            data=td, timeout=60)
+        log(f"Thumbnail set on {video_id}")
+    except Exception as e:
+        log(f"Thumbnail error: {e}")
+
+# ── SAVE ALL CONTENT ──────────────────────────────────────────────────────────
+def save_all(m, folder, vt_code, ranking, script, pkg,
+             video_id=None, short_ids=None):
+    short_ids = short_ids or []
+
+    with open(os.path.join(folder,"01_script.md"),"w") as f:
+        f.write(f"# {m['home']} {m['home_goals']}-{m['away_goals']} {m['away']}\n")
+        f.write(f"**Type:** {vt_code} — {VIDEO_TYPES[vt_code]}\n\n---\n\n{script}")
+
+    with open(os.path.join(folder,"02_titles.md"),"w") as f:
+        f.write("# 30 Titles (best first)\n\n")
+        for i,t in enumerate(pkg.get("titles",[]),1):
+            f.write(f"{i:>2}. [{t.get('score','?')}] "
+                    f"({t.get('lever','?')}) {t.get('text','')}\n")
+
+    with open(os.path.join(folder,"03_thumbnails.md"),"w") as f:
+        f.write("# 10 Thumbnail Concepts\n\n")
+        for i,t in enumerate(pkg.get("thumbnails",[]),1):
+            f.write(f"## {i}. \"{t.get('text','')}\"\n"
+                    f"- Emotion  : {t.get('emotion','')}\n"
+                    f"- CTR logic: {t.get('ctr_logic','')}\n"
+                    f"- Layout   : {t.get('layout','')}\n\n")
+
+    with open(os.path.join(folder,"04_shorts.md"),"w") as f:
+        f.write("# 3 Shorts Scripts\n\n")
+        for i,s in enumerate(pkg.get("shorts",[]),1):
+            f.write(f"## Short {i}\n"
+                    f"**Hook (0-3s):** {s.get('hook','')}\n\n"
+                    f"{s.get('script','')}\n\n---\n\n")
+
+    soc = pkg.get("social",{})
+    with open(os.path.join(folder,"05_social.md"),"w") as f:
+        f.write("# Social Posts\n\n## X / Twitter Thread\n")
+        for tw in soc.get("x_thread",[]): f.write(f"- {tw}\n")
+        for k in("instagram","facebook","community","linkedin"):
+            f.write(f"\n## {k.title()}\n{soc.get(k,'')}\n")
+
+    with open(os.path.join(folder,"package.json"),"w") as f:
+        json.dump({
+            "match":       m,
+            "type":        vt_code,
+            "best_title":  pkg.get("best_title",""),
+            "description": pkg.get("description",""),
+            "tags":        pkg.get("tags",[]),
+            "youtube_id":  video_id,
+            "youtube_url": (f"https://youtube.com/watch?v={video_id}"
+                            if video_id else None),
+            "shorts_ids":  short_ids,
+            "shorts_urls": [f"https://youtube.com/shorts/{s}"
+                            for s in short_ids],
+            "generated_at": dt.datetime.utcnow().isoformat(),
+        }, f, indent=2)
+
+    log(f"Content saved → {folder}")
+    if video_id:
+        log(f"▶ Main   https://youtube.com/watch?v={video_id}")
+    for sid in short_ids:
+        log(f"▶ Short  https://youtube.com/shorts/{sid}")
+
+# ── MAIN PIPELINE ─────────────────────────────────────────────────────────────
+def process_match(m):
+    folder = os.path.join(OUTPUT_DIR,
+        f"{m['id']}_{slug(m['home'])}-vs-{slug(m['away'])}")
     os.makedirs(folder, exist_ok=True)
 
-    with open(os.path.join(folder, "01_script.md"), "w") as f:
-        f.write(f"# {m['home']} {m['home_goals']}-{m['away_goals']} {m['away']}\n")
-        f.write(f"**Video type:** {vt_code} — {VIDEO_TYPES[vt_code]}\n\n")
-        f.write(f"**Angle ranking:** {', '.join(c for c,_ in ranking[:4])}\n\n---\n\n")
-        f.write(script)
+    strategy = load_strategy()
+    ranking  = score_types(m)
+    vt_code  = ranking[0][0]
+    log(f"▶ {m['home']} {m['home_goals']}-{m['away_goals']} {m['away']} "
+        f"→ TYPE {vt_code} ({VIDEO_TYPES[vt_code]})")
 
-    titles = pkg.get("titles", [])
-    with open(os.path.join(folder, "02_titles.md"), "w") as f:
-        f.write("# 30 Titles (best first)\n\n")
-        for i, t in enumerate(titles, 1):
-            f.write(f"{i:>2}. [{t.get('score','?')}] ({t.get('lever','?')}) {t.get('text','')}\n")
+    # Script
+    log("Writing script via Groq...")
+    script = gen_script(m, vt_code, strategy)
 
-    with open(os.path.join(folder, "03_thumbnails.md"), "w") as f:
-        f.write("# 10 Thumbnail Concepts\n\n")
-        for i, t in enumerate(pkg.get("thumbnails", []), 1):
-            f.write(f"## {i}. \"{t.get('text','')}\"\n")
-            f.write(f"- Emotion: {t.get('emotion','')}\n")
-            f.write(f"- CTR logic: {t.get('ctr_logic','')}\n")
-            f.write(f"- Layout: {t.get('layout','')}\n\n")
+    # Package
+    log("Generating titles, thumbnails, social posts...")
+    pkg = gen_package(m, script)
 
-    with open(os.path.join(folder, "04_shorts.md"), "w") as f:
-        f.write("# 3 Shorts\n\n")
-        for i, s in enumerate(pkg.get("shorts", []), 1):
-            f.write(f"## Short {i}\n**Hook:** {s.get('hook','')}\n\n{s.get('script','')}\n\n")
+    # Main video
+    video_path = None
+    thumb_path = os.path.join(folder, "thumbnail.jpg")
+    if not SKIP_VIDEO:
+        try:
+            log("Building 1080p video...")
+            import video as ve
+            video_path = ve.generate_video(m, script, folder)
+        except Exception as e:
+            log(f"Video build error (non-fatal): {e}")
 
-    with open(os.path.join(folder, "05_social.md"), "w") as f:
-        soc = pkg.get("social", {})
-        f.write("# Social Posts\n\n## X / Twitter thread\n")
-        for tw in soc.get("x_thread", []):
-            f.write(f"- {tw}\n")
-        for key in ("instagram", "facebook", "community", "linkedin"):
-            f.write(f"\n## {key.title()}\n{soc.get(key,'')}\n")
+    # Shorts
+    short_paths = []
+    if not SKIP_SHORTS:
+        try:
+            log("Building 3 Shorts...")
+            import shorts as sh
+            short_paths = sh.generate_all_shorts(
+                m, pkg.get("shorts",[]), folder)
+        except Exception as e:
+            log(f"Shorts error (non-fatal): {e}")
 
-    with open(os.path.join(folder, "package.json"), "w") as f:
-        json.dump({"match": m, "video_type": vt_code, "package": pkg}, f, indent=2)
+    # Upload
+    video_id  = None
+    short_ids = []
+    if not SKIP_UPLOAD:
+        token = get_yt_token()
+        if token:
+            # Upload main video
+            if video_path:
+                title = pkg.get("best_title",
+                    f"{m['home']} vs {m['away']} | WC2026 Analysis")
+                desc  = pkg.get("description", script[:800])
+                tags  = pkg.get("tags",
+                    ["World Cup 2026","football","FIFA","soccer","WC2026"])
+                video_id = yt_upload(token, video_path, title, desc, tags)
+                if video_id:
+                    yt_set_thumbnail(token, video_id, thumb_path)
 
-    log(f"Saved -> {folder}  (best title: {titles[0]['text'] if titles else 'n/a'})")
+            # Upload Shorts
+            for i, sp in enumerate(short_paths, 1):
+                st = pkg.get("shorts",[{}]*i)[i-1]
+                short_title = f"{st.get('hook','WC2026 Short')[:80]} #Shorts"
+                sid = yt_upload(
+                    token, sp, short_title,
+                    f"WC2026 Short #{i}\n\n#Shorts #WC2026 #Football #FIFA",
+                    ["Shorts","WC2026","football","FIFA","soccer","football shorts"],
+                    is_short=True)
+                if sid: short_ids.append(sid)
+        else:
+            log("No YouTube credentials — skipping upload (add secrets to GitHub)")
+
+    save_all(m, folder, vt_code, ranking, script, pkg, video_id, short_ids)
     return folder
 
-
-# ----------------------------------------------------------------------------
-# PIPELINE
-# ----------------------------------------------------------------------------
-def process_match(m, mock_script=None, mock_pkg=None):
-    ctx = build_data_context(m)
-    ranking = score_video_types(m)
-    vt_code = ranking[0][0]
-    log(f"{m['home']} {m['home_goals']}-{m['away_goals']} {m['away']} -> "
-        f"TYPE {vt_code} ({VIDEO_TYPES[vt_code]})")
-    script = gen_script(m, ctx, vt_code, mock=mock_script)
-    pkg = gen_package(m, ctx, script, mock=mock_pkg)
-    return save_package(m, vt_code, ranking, script, pkg)
-
-
 def run_once():
-    done = load_state()
-    matches = fetch_finished_matches()
-    fresh = [m for m in matches if m["id"] not in done]
-    log(f"{len(matches)} finished, {len(fresh)} new to process.")
+    os.makedirs(OUTPUT_DIR, exist_ok=True)
+    done    = load_state()
+    matches = fetch_matches()
+    fresh   = [m for m in matches if m["id"] not in done]
+    log(f"{len(matches)} finished matches found, {len(fresh)} new to process")
     for m in fresh:
         try:
             process_match(m)
             done.add(m["id"])
             save_state(done)
         except Exception as e:
-            log(f"ERROR on {m['id']}: {e}")
-    return len(fresh)
-
+            log(f"ERROR processing {m['id']}: {e}")
+            # Still mark as done to avoid infinite retry loops on bad data
+            done.add(m["id"])
+            save_state(done)
 
 def run_demo():
-    """No keys needed — proves the full pipeline writes correct files."""
-    log("DEMO MODE — sample match, mock AI output.")
-    m = {"id": "demo1", "utc": "2026-06-20T19:00:00Z", "stage": "GROUP_STAGE",
-         "group": "F", "home": "Argentina", "away": "Nigeria",
-         "home_goals": 1, "away_goals": 2, "winner": "AWAY_TEAM"}
-    mock_script = ("HOOK\n[Zoom on scoreline graphic] The world champions just "
-                   "lost — and almost nobody is talking about WHY.\n\nCONFLICT\n"
-                   "Argentina had 68% possession and still walked off beaten...\n\n"
-                   "BREAKDOWN\n[Tactical board: Nigeria's low block]...\n\n"
-                   "BIG INSIGHT\nThe goals came from the channel Argentina left "
-                   "open when their full-back pushed up...\n\nTOURNAMENT IMPACT\n"
-                   "Group F is now wide open...\n\nPREDICTION\nNigeria reaches the "
-                   "last 16.\n\nCTA\nSubscribe — tomorrow we break down the group.")
-    mock_pkg = {
-        "titles": [{"text": f"Why Argentina REALLY Lost (#{i})", "score": 90 - i,
-                    "lever": "curiosity"} for i in range(30)],
-        "thumbnails": [{"text": "GIANTS FALL", "emotion": "shock",
-                        "ctr_logic": "upset + recognizable badge",
-                        "layout": "split crest vs crest, red arrow"} for _ in range(10)],
-        "shorts": [{"hook": "Argentina lost and nobody noticed THIS.",
-                    "script": "30s breakdown of the open channel..."} for _ in range(3)],
-        "social": {"x_thread": ["1/ Argentina lost. Here's why 🧵", "2/ The full-back..."],
-                   "instagram": "The champions fell. Swipe for why ⚽️",
-                   "facebook": "Big upset in Group F...",
-                   "community": "Did you spot why Argentina lost? 👀",
-                   "linkedin": "A lesson in risk management, from football."}
-    }
-    process_match(m, mock_script=mock_script, mock_pkg=mock_pkg)
-    log("Demo complete. Check the output/ folder.")
-
+    """Demo mode — no football API or YouTube needed. Groq still needed."""
+    log("DEMO MODE — Germany 4-0 Curacao (Group E)")
+    os.environ.setdefault("SKIP_UPLOAD","true")
+    m = {"id":"demo_v31","utc":"2026-06-14T18:00:00Z",
+         "stage":"GROUP_STAGE","group":"E",
+         "home":"Germany","away":"Curacao",
+         "home_goals":4,"away_goals":0,"winner":"HOME_TEAM"}
+    process_match(m)
+    log("Demo complete. Check output/demo_v31_germany-vs-curacao/")
 
 def main():
     args = sys.argv[1:]
-    if "--demo" in args:
-        run_demo()
+    if   "--demo"  in args: run_demo()
     elif "--watch" in args:
-        log(f"WATCH mode — polling every {POLL_SECONDS//60} min. Ctrl-C to stop.")
-        while True:
-            run_once()
-            time.sleep(POLL_SECONDS)
+        log("Watch mode — polling every 15 min. Ctrl-C to stop.")
+        while True: run_once(); time.sleep(900)
     else:
         run_once()
-
 
 if __name__ == "__main__":
     main()
