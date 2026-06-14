@@ -1,0 +1,260 @@
+{
+  "match": {
+    "id": "537339",
+    "utc": "2026-06-13T22:00:00Z",
+    "stage": "GROUP_STAGE",
+    "group": "GROUP_C",
+    "home": "Brazil",
+    "away": "Morocco",
+    "home_goals": 1,
+    "away_goals": 1,
+    "winner": "DRAW"
+  },
+  "video_type": "C",
+  "package": {
+    "titles": [
+      {
+        "text": "Brazil Stunned by Morocco",
+        "score": 95,
+        "lever": "surprise"
+      },
+      {
+        "text": "World Cup Chaos Unfolds",
+        "score": 92,
+        "lever": "conflict"
+      },
+      {
+        "text": "Morocco Shocks Brazil 1-1",
+        "score": 90,
+        "lever": "surprise"
+      },
+      {
+        "text": "Brazil's World Cup Dreams Shaken",
+        "score": 88,
+        "lever": "consequence"
+      },
+      {
+        "text": "Group C Thrown into Chaos",
+        "score": 85,
+        "lever": "conflict"
+      },
+      {
+        "text": "Can Brazil Recover from Setback?",
+        "score": 83,
+        "lever": "curiosity"
+      },
+      {
+        "text": "Morocco's Brave Performance Pays Off",
+        "score": 80,
+        "lever": "surprise"
+      },
+      {
+        "text": "Brazil's Struggles Continue",
+        "score": 78,
+        "lever": "consequence"
+      },
+      {
+        "text": "Morocco's Tactics Exposed Brazil",
+        "score": 75,
+        "lever": "conflict"
+      },
+      {
+        "text": "What's Next for Brazil?",
+        "score": 72,
+        "lever": "curiosity"
+      },
+      {
+        "text": "Morocco's Counter-Attacking Masterclass",
+        "score": 70,
+        "lever": "surprise"
+      },
+      {
+        "text": "Brazil's Possession Dominance Not Enough",
+        "score": 68,
+        "lever": "conflict"
+      },
+      {
+        "text": "Morocco's Target Man Proves Key",
+        "score": 65,
+        "lever": "surprise"
+      },
+      {
+        "text": "Brazil's Road to Recovery",
+        "score": 62,
+        "lever": "consequence"
+      },
+      {
+        "text": "Morocco's Dark Horse Status Confirmed",
+        "score": 60,
+        "lever": "surprise"
+      },
+      {
+        "text": "Group C's Unpredictable Future",
+        "score": 58,
+        "lever": "conflict"
+      },
+      {
+        "text": "Brazil's Next Match Crucial",
+        "score": 55,
+        "lever": "curiosity"
+      },
+      {
+        "text": "Morocco's Momentum Builds",
+        "score": 52,
+        "lever": "surprise"
+      },
+      {
+        "text": "Brazil's World Cup Hopes Hanging",
+        "score": 50,
+        "lever": "consequence"
+      },
+      {
+        "text": "Morocco's Tactical Genius",
+        "score": 48,
+        "lever": "surprise"
+      },
+      {
+        "text": "Brazil's Struggles in Front of Goal",
+        "score": 45,
+        "lever": "conflict"
+      },
+      {
+        "text": "Morocco's Brave Performance",
+        "score": 42,
+        "lever": "surprise"
+      },
+      {
+        "text": "Brazil's Group C Struggles",
+        "score": 40,
+        "lever": "consequence"
+      },
+      {
+        "text": "Morocco's Shocking Result",
+        "score": 38,
+        "lever": "surprise"
+      },
+      {
+        "text": "Brazil's World Cup Dreams Fading",
+        "score": 35,
+        "lever": "consequence"
+      },
+      {
+        "text": "Morocco's Counter-Attacking Prowess",
+        "score": 32,
+        "lever": "surprise"
+      },
+      {
+        "text": "Brazil's Possession Not Enough",
+        "score": 30,
+        "lever": "conflict"
+      },
+      {
+        "text": "Morocco's Target Man",
+        "score": 28,
+        "lever": "surprise"
+      },
+      {
+        "text": "Brazil's Road to Recovery Begins",
+        "score": 25,
+        "lever": "consequence"
+      },
+      {
+        "text": "Morocco's Dark Horse Status",
+        "score": 22,
+        "lever": "surprise"
+      },
+      {
+        "text": "Group C's Unpredictable Future Ahead",
+        "score": 20,
+        "lever": "conflict"
+      }
+    ],
+    "thumbnails": [
+      {
+        "text": "Brazil Shocked",
+        "emotion": "surprise",
+        "ctr_logic": "emotional appeal",
+        "layout": "text overlay"
+      },
+      {
+        "text": "Morocco Celebrates",
+        "emotion": "joy",
+        "ctr_logic": "emotional appeal",
+        "layout": "image only"
+      },
+      {
+        "text": "World Cup Chaos",
+        "emotion": "confusion",
+        "ctr_logic": "curiosity",
+        "layout": "text overlay"
+      },
+      {
+        "text": "Brazil's Struggles",
+        "emotion": "frustration",
+        "ctr_logic": "emotional appeal",
+        "layout": "image only"
+      },
+      {
+        "text": "Morocco's Tactics",
+        "emotion": "intrigue",
+        "ctr_logic": "curiosity",
+        "layout": "text overlay"
+      },
+      {
+        "text": "Brazil's Next Match",
+        "emotion": "anticipation",
+        "ctr_logic": "curiosity",
+        "layout": "image only"
+      },
+      {
+        "text": "Morocco's Momentum",
+        "emotion": "excitement",
+        "ctr_logic": "emotional appeal",
+        "layout": "text overlay"
+      },
+      {
+        "text": "Group C Unpredictable",
+        "emotion": "confusion",
+        "ctr_logic": "curiosity",
+        "layout": "image only"
+      },
+      {
+        "text": "Brazil's World Cup Dreams",
+        "emotion": "concern",
+        "ctr_logic": "emotional appeal",
+        "layout": "text overlay"
+      },
+      {
+        "text": "Morocco's Brave Performance",
+        "emotion": "admiration",
+        "ctr_logic": "emotional appeal",
+        "layout": "image only"
+      }
+    ],
+    "shorts": [
+      {
+        "hook": "Brazil stunned by Morocco!",
+        "script": "Brazil's World Cup dreams were put to the test last night, and the result will send shockwaves through the entire tournament. A 1-1 draw against Morocco has thrown Group C into chaos - but what does it really mean for the favorites?"
+      },
+      {
+        "hook": "Morocco's tactics exposed Brazil!",
+        "script": "Morocco's coach set up his team to absorb pressure and hit Brazil on the counter, using their pacey wingers to exploit the spaces left by Brazil's attacking full-backs. As the game wore on, Brazil's possession dominance began to wane, and Morocco started to gain a foothold in the match."
+      },
+      {
+        "hook": "Brazil's struggles continue!",
+        "script": "Brazil's possession dominance was not enough to secure a win against Morocco. The Sele\u00e7\u00e3o came into this match as overwhelming favorites, but Morocco's clever tactics and Brazil's own struggles in front of goal have raised more questions than answers."
+      }
+    ],
+    "social": {
+      "x_thread": [
+        "Brazil stunned by Morocco! What does this result mean for the World Cup? #Brazil #Morocco #WorldCup",
+        "Morocco's tactics exposed Brazil! Can the Sele\u00e7\u00e3o recover from this setback? #Morocco #Brazil #WorldCup",
+        "Brazil's struggles continue! Will they be able to turn their campaign around? #Brazil #WorldCup"
+      ],
+      "instagram": "Brazil's World Cup dreams were put to the test last night, and the result will send shockwaves through the entire tournament. A 1-1 draw against Morocco has thrown Group C into chaos - but what does it really mean for the favorites? #Brazil #Morocco #WorldCup",
+      "facebook": "Brazil's World Cup dreams were put to the test last night, and the result will send shockwaves through the entire tournament. A 1-1 draw against Morocco has thrown Group C into chaos - but what does it really mean for the favorites? Share your thoughts in the comments below! #Brazil #Morocco #WorldCup",
+      "community": "Join the discussion on our community forum to talk about the latest World Cup matches and results! What do you think about Brazil's draw against Morocco? #Brazil #Morocco #WorldCup",
+      "linkedin": "The World Cup is heating up, and the latest match between Brazil and Morocco has thrown Group C into chaos. What does this result mean for the tournament, and how will it impact the teams involved? Share your thoughts and analysis in the comments below! #Brazil #Morocco #WorldCup"
+    }
+  }
+}

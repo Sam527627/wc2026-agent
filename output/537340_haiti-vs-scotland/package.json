@@ -1,0 +1,260 @@
+{
+  "match": {
+    "id": "537340",
+    "utc": "2026-06-14T01:00:00Z",
+    "stage": "GROUP_STAGE",
+    "group": "GROUP_C",
+    "home": "Haiti",
+    "away": "Scotland",
+    "home_goals": 0,
+    "away_goals": 1,
+    "winner": "AWAY_TEAM"
+  },
+  "video_type": "C",
+  "package": {
+    "titles": [
+      {
+        "text": "Scotland Stuns Haiti",
+        "score": 90,
+        "lever": "surprise"
+      },
+      {
+        "text": "Haiti's World Cup Dreams Shattered",
+        "score": 85,
+        "lever": "consequence"
+      },
+      {
+        "text": "Scotland Takes Giant Leap",
+        "score": 80,
+        "lever": "stakes"
+      },
+      {
+        "text": "Group C Heats Up",
+        "score": 75,
+        "lever": "conflict"
+      },
+      {
+        "text": "Scotland's Winning Formula",
+        "score": 70,
+        "lever": "curiosity"
+      },
+      {
+        "text": "Haiti's Resilience Not Enough",
+        "score": 65,
+        "lever": "conflict"
+      },
+      {
+        "text": "Scotland's Substitutions Pay Off",
+        "score": 60,
+        "lever": "surprise"
+      },
+      {
+        "text": "The Battle for Group C",
+        "score": 55,
+        "lever": "stakes"
+      },
+      {
+        "text": "Scotland's Road to the Knockouts",
+        "score": 50,
+        "lever": "consequence"
+      },
+      {
+        "text": "Haiti's Must-Win Match",
+        "score": 45,
+        "lever": "stakes"
+      },
+      {
+        "text": "Scotland's Tactical Masterclass",
+        "score": 40,
+        "lever": "curiosity"
+      },
+      {
+        "text": "The Group C Showdown",
+        "score": 35,
+        "lever": "conflict"
+      },
+      {
+        "text": "Scotland's Victory Boosts Morale",
+        "score": 30,
+        "lever": "surprise"
+      },
+      {
+        "text": "Haiti's World Cup Hopes Fading",
+        "score": 25,
+        "lever": "consequence"
+      },
+      {
+        "text": "The Scotland-Haiti Rivalry",
+        "score": 20,
+        "lever": "conflict"
+      },
+      {
+        "text": "Scotland's Road to Victory",
+        "score": 15,
+        "lever": "curiosity"
+      },
+      {
+        "text": "Group C's Top Spot Up for Grabs",
+        "score": 10,
+        "lever": "stakes"
+      },
+      {
+        "text": "Haiti's Defense Cracks",
+        "score": 5,
+        "lever": "surprise"
+      },
+      {
+        "text": "Scotland's Winning Streak",
+        "score": 5,
+        "lever": "consequence"
+      },
+      {
+        "text": "The Group C Table",
+        "score": 5,
+        "lever": "curiosity"
+      },
+      {
+        "text": "Haiti's Next Match",
+        "score": 5,
+        "lever": "stakes"
+      },
+      {
+        "text": "Scotland's Team Effort",
+        "score": 5,
+        "lever": "curiosity"
+      },
+      {
+        "text": "The Scotland-Haiti Match",
+        "score": 5,
+        "lever": "conflict"
+      },
+      {
+        "text": "Group C's Remaining Fixtures",
+        "score": 5,
+        "lever": "curiosity"
+      },
+      {
+        "text": "Haiti's World Cup Journey",
+        "score": 5,
+        "lever": "consequence"
+      },
+      {
+        "text": "Scotland's Tactical Plan",
+        "score": 5,
+        "lever": "curiosity"
+      },
+      {
+        "text": "The Group C Standings",
+        "score": 5,
+        "lever": "stakes"
+      },
+      {
+        "text": "Haiti's Resilient Performance",
+        "score": 5,
+        "lever": "conflict"
+      },
+      {
+        "text": "Scotland's Victory Celebration",
+        "score": 5,
+        "lever": "surprise"
+      },
+      {
+        "text": "The Scotland-Haiti Result",
+        "score": 5,
+        "lever": "consequence"
+      },
+      {
+        "text": "Group C's Next Matches",
+        "score": 5,
+        "lever": "curiosity"
+      }
+    ],
+    "thumbnails": [
+      {
+        "text": "Scotland Wins",
+        "emotion": "excitement",
+        "ctr_logic": "show winning team",
+        "layout": "horizontal"
+      },
+      {
+        "text": "Haiti Falls",
+        "emotion": "disappointment",
+        "ctr_logic": "show losing team",
+        "layout": "vertical"
+      },
+      {
+        "text": "Group C Table",
+        "emotion": "curiosity",
+        "ctr_logic": "show standings",
+        "layout": "square"
+      },
+      {
+        "text": "Scotland Celebrates",
+        "emotion": "joy",
+        "ctr_logic": "show celebration",
+        "layout": "horizontal"
+      },
+      {
+        "text": "Haiti's Next Match",
+        "emotion": "anticipation",
+        "ctr_logic": "show upcoming match",
+        "layout": "vertical"
+      },
+      {
+        "text": "Scotland's Roadmap",
+        "emotion": "determination",
+        "ctr_logic": "show team's journey",
+        "layout": "square"
+      },
+      {
+        "text": "Group C Heats Up",
+        "emotion": "excitement",
+        "ctr_logic": "show group stage",
+        "layout": "horizontal"
+      },
+      {
+        "text": "Haiti's World Cup",
+        "emotion": "patriotism",
+        "ctr_logic": "show national team",
+        "layout": "vertical"
+      },
+      {
+        "text": "Scotland's Victory",
+        "emotion": "pride",
+        "ctr_logic": "show winning team",
+        "layout": "square"
+      },
+      {
+        "text": "Group C Showdown",
+        "emotion": "tension",
+        "ctr_logic": "show group stage",
+        "layout": "horizontal"
+      }
+    ],
+    "shorts": [
+      {
+        "hook": "Scotland takes the lead!",
+        "script": "Scotland's winning goal, Haiti's resilient defense, and the implications for Group C."
+      },
+      {
+        "hook": "Haiti's World Cup hopes fading!",
+        "script": "Haiti's must-win match, Scotland's road to the knockouts, and the Group C standings."
+      },
+      {
+        "hook": "Group C heats up!",
+        "script": "Scotland's victory, Haiti's next match, and the remaining fixtures in Group C."
+      }
+    ],
+    "social": {
+      "x_thread": [
+        "Scotland takes the lead in Group C! #Scotland #Haiti #WorldCup",
+        "Haiti's World Cup hopes are fading... #Haiti #Scotland #WorldCup",
+        "Group C is heating up! #GroupC #WorldCup #Scotland"
+      ],
+      "instagram": "Scotland's winning goal and Haiti's resilient defense! #Scotland #Haiti #WorldCup",
+      "facebook": "Scotland takes the lead in Group C! Haiti's next match is a must-win. #Scotland #Haiti #WorldCup",
+      "community": "Discuss the Scotland-Haiti match and the implications for Group C! #Scotland #Haiti #WorldCup",
+      "linkedin": "The business of football: Scotland's victory and Haiti's next steps. #Scotland #Haiti #WorldCup"
+    }
+  }
+}
