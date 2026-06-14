@@ -1,47 +1,40 @@
 name: WC2026 Content Agent
-
 on:
   schedule:
     - cron: "0 */2 * * *"
   workflow_dispatch: {}
-
 permissions:
   contents: write
-
 jobs:
   generate:
     runs-on: ubuntu-latest
-    concurrency:
-      group: wc2026-agent
-      cancel-in-progress: false
-
     steps:
-      - name: Checkout repo
-        uses: actions/checkout@v4
-
-      - name: Set up Python
-        uses: actions/setup-python@v5
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-
-      - name: Install dependencies
+      - name: Install system dependencies
+        run: sudo apt-get update -qq && sudo apt-get install -y espeak-ng ffmpeg
+      - name: Install Python dependencies
         run: pip install -r requirements.txt
-
       - name: Run the agent
         env:
-          FOOTBALL_DATA_KEY: ${{ secrets.FOOTBALL_DATA_KEY }}
-          GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
+          FOOTBALL_DATA_KEY:     ${{ secrets.FOOTBALL_DATA_KEY }}
+          GROQ_API_KEY:          ${{ secrets.GROQ_API_KEY }}
+          YOUTUBE_CLIENT_ID:     ${{ secrets.YOUTUBE_CLIENT_ID }}
+          YOUTUBE_CLIENT_SECRET: ${{ secrets.YOUTUBE_CLIENT_SECRET }}
+          YOUTUBE_REFRESH_TOKEN: ${{ secrets.YOUTUBE_REFRESH_TOKEN }}
           COMPETITION: WC
         run: python3 wc2026_agent.py
-
-      - name: Commit any new content
+      - name: Commit new content
         run: |
           git config user.name "wc2026-agent"
           git config user.email "agent@users.noreply.github.com"
-          mkdir -p output && git add output
-          if git diff --cached --quiet; then
-            echo "No new matches — nothing to commit."
-          else
-            git commit -m "Auto: new content $(date -u +'%Y-%m-%d %H:%M UTC')"
-            git push
-          fi
+          mkdir -p output
+          git pull --rebase origin main
+          git add output
+          git diff --cached --quiet && echo "Nothing to commit" && exit 0
+          git commit -m "Auto: $(date -u +'%Y-%m-%d %H:%M UTC')"
+          git push || (git pull --rebase origin main && git push)
