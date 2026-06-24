@@ -433,16 +433,23 @@ def run_once():
     matches = fetch_matches()
     fresh   = [m for m in matches if m["id"] not in done]
     log(f"{len(matches)} finished matches found, {len(fresh)} new to process")
-    for m in fresh:
+    for idx, m in enumerate(fresh):
         try:
             process_match(m)
             done.add(m["id"])
             save_state(done)
         except Exception as e:
             log(f"ERROR processing {m['id']}: {e}")
-            # Still mark as done to avoid infinite retry loops on bad data
-            done.add(m["id"])
-            save_state(done)
+            if "429" in str(e):
+                log("Groq rate limit hit — waiting 60s before next match")
+                time.sleep(60)
+            else:
+                done.add(m["id"])
+                save_state(done)
+        # Rate limit protection: pause every 3 matches
+        if (idx + 1) % 3 == 0 and idx < len(fresh) - 1:
+            log("Pausing 30s to respect Groq rate limits...")
+            time.sleep(30)
 
 def run_demo():
     """Demo mode — no football API or YouTube needed. Groq still needed."""
