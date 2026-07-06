@@ -29,12 +29,15 @@ jobs:
           COMPETITION: WC
         run: python3 wc2026_agent.py
       - name: Commit new content
-        run: |
-          git config user.name "wc2026-agent"
-          git config user.email "agent@users.noreply.github.com"
-          mkdir -p output
-          git pull --rebase origin main
-          git add output
-          git diff --cached --quiet && echo "Nothing to commit" && exit 0
-          git commit -m "Auto: $(date -u +'%Y-%m-%d %H:%M UTC')"
-          git push || (git pull --rebase origin main && git push)
+  run: |
+    git config user.name "wc2026-agent"
+    git config user.email "agent@users.noreply.github.com"
+    mkdir -p output
+    git add -A
+    git diff --cached --quiet && echo "Nothing to commit" && exit 0
+    git stash
+    git pull --rebase origin main
+    git stash pop || true
+    git add -A
+    git commit -m "Auto: $(date -u +'%Y-%m-%d %H:%M UTC')"
+    git push || (git pull --rebase origin main && git push)
